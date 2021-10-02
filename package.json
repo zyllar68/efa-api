@@ -1,0 +1,31 @@
+{
+  "name": "efa-api",
+  "version": "1.0.0",
+  "description": "efa-api",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zyllar68/efa-api.git"
+  },
+  "author": "zyrilmancion@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zyllar68/efa-api/issues"
+  },
+  "homepage": "https://github.com/zyllar68/efa-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.8",
+    "mongoose-auto-increment": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
