@@ -5,18 +5,22 @@ const parcelsRoute = require("./routes/parcels.route");
 const express = require('express');  
 const app = express();
 
-app.use(express.urlencoded({extended: true})); 
-app.use(express.json());
+//Middleware
+require('./startup/middleware')(app);
+
 
 app.use('/parcels', parcelsRoute);
 app.use('/users', usersRoute);
 
-//connect to db
-mongoose.connect(
-  process.env.LOCAL,
-  { useNewUrlParser: true },
-  () => console.log('connted to DB!')
-);
+// //connect to db
+// mongoose.connect(
+//   process.env.MONGODB_URI,
+//   { useNewUrlParser: true },
+//   () => console.log('connted to DB!')
+// );
+
+//Database Connection
+require('./startup/db')();
 
 //RUN SERVER
 app.listen(process.env.PORT, () => {
