@@ -17,9 +17,7 @@ const Schema = new mongoose.Schema(
     },
     account_type: {
       type: Number,
-      min: 1,
-      max: 2,
-      required: true,
+      default: 2,
     },
     isDeleted: { type: Boolean, default: false },
   },

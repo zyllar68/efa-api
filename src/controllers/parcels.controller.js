@@ -1,6 +1,6 @@
 const Parcels = require("../models/parcels.model");
 
-exports.read = async (req, res, next) => {
+exports.readAll = async (req, res, next) => {
   try {
     const filterPipeline = [
       {
@@ -31,6 +31,50 @@ exports.create = async (req, res, next) => {
 
     return res.status(200).send("Successfully saved!")
 
+  } catch (error) {
+    return res.status(500).send('yeah');
+  }
+}
+
+exports.read = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const parcel = await Parcels.findById(id);
+
+    if (!parcel) return next({ codeName: 'NotFound' });
+
+    return res.status(200).send(parcel);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+exports.update = async (req, res, next) => {
+  try {
+    const parcel = await Parcels.findByIdAndUpdate(req.params.id, req.body.payload)
+    if (!parcel) return next({ codeName: 'NotFound' });
+
+    return res.status(200).send('Successfully updated.');
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
+exports.delete = async (req, res, next) => {
+  try {
+
+    const id = req.params.id;
+    const doc = await Parcels.findByIdAndUpdate(
+      id,
+      { isDeleted: true },
+      {
+        runValidators: true,
+        omitUndefined: true,
+      }
+    );
+    if (!doc) return next({ codeName: 'NotFound' });
+
+    return res.status(200).send('Successfully removed.');
   } catch (error) {
     return next(error);
   }

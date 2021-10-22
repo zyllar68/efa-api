@@ -12,15 +12,11 @@ require('./startup/middleware')(app);
 app.use('/parcels', parcelsRoute);
 app.use('/users', usersRoute);
 
-// //connect to db
-// mongoose.connect(
-//   process.env.MONGODB_URI,
-//   { useNewUrlParser: true },
-//   () => console.log('connted to DB!')
-// );
-
 //Database Connection
 require('./startup/db')();
+
+//ERROR HANDLER
+app.use(require('./_utils/error_handler'));
 
 //RUN SERVER
 app.listen(process.env.PORT, () => {

@@ -2,22 +2,22 @@ const mongoose = require('mongoose');
 const autoIncrement = require("mongoose-auto-increment");
 
 const Schema = new mongoose.Schema(
-  {
-    sender: [
+  { 
+    lastEditedBy:{ type: String},
+    createdBy:{ type: String, required: true },
+    sender:
       {
         full_name: { type: String, required: true },
         address: { type: String, required: true },
         contact_number: { type: String, required: true },
-      }
-    ],
-    consignee: [
+      },
+    consignee:
       {
         full_name: { type: String, required: true },
         address: { type: String, required: true },
         contact_number: { type: String, required: true },
-      }
-    ],
-    parcel_info: [
+      },
+    parcel_info:
       {
         item_description: { type: String, required: true },
         declared_value: { type: String, required: true },
@@ -33,8 +33,7 @@ const Schema = new mongoose.Schema(
             h: { type: String, required: true },
           },
         ]
-      }
-    ],
+      },
     isDeleted: { type: Boolean, default: false },
   },
   {

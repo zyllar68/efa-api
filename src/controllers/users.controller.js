@@ -22,24 +22,38 @@ exports.auth = async(req, res, next) => {
   }
 }
 
-exports.read = async(req, res, next) => {
+exports.readAll = async(req, res, next) => {
   try {
     const filterPipeline = [
       {
         $match: {
           isDeleted: false,
           bound_to_client: req.body._id,
+          account_type: 2
         },
       },
     ];
 
     const docs = await Users.aggregate([
       ...filterPipeline,
-      { $project: { isDeleted: 0, created_by: 0, bound_to_client: 0, __v: 0 } },
+      { $project: {isDeleted: 0, created_by: 0, bound_to_client: 0, __v: 0 } },
       { $sort: { name: 1 } },
-    ]);
+    ], {account_type: '2'});
 
     return res.status(200).send(docs);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+exports.read = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const item = await Users.findById(id).select('-createdAt -updatedAt -status -__v');
+
+    if (!item) return next({ codeName: 'NotFound' });
+
+    return res.status(200).send(item);
   } catch (error) {
     return next(error);
   }
@@ -54,7 +68,7 @@ exports.create = async (req, res, next) => {
 
     return res.status(200).send('Successfully saved.');
   } catch (error) {
-    return res.json({message: error.message})
+    return next(error);
   }
 };
 
@@ -78,17 +92,28 @@ exports.delete = async (req, res, next) => {
   try {
 
     const id = req.params.id;
-    const doc = await Distributable.findByIdAndUpdate(
-      id,
-      { isDeleted: true },
-      {
-        runValidators: true,
-        omitUndefined: true,
-      }
-    );
+    const doc = await Users.deleteOne({
+      _id: id
+    });
     if (!doc) return next({ codeName: 'NotFound' });
 
-    return res.status(200).send('Successfully removed.');
+    return res.status(200).send(doc);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+exports.readUser = async (req, res, next) => {
+  try {
+    const username = req.body.payload;
+    console.log(username)
+    const user = await Users.findOne(username).select('-createdAt -updatedAt -status -__v');
+
+    if(user === null) {
+      return res.status(200).send('username is available');
+    }else {
+      return res.status(200).send('username is already used!');
+    }
   } catch (error) {
     return next(error);
   }
