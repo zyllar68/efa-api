@@ -3,8 +3,7 @@ const autoIncrement = require("mongoose-auto-increment");
 
 const Schema = new mongoose.Schema(
   { 
-    lastEditedBy:{ type: String},
-    createdBy:{ type: String, required: true },
+
     sender:
       {
         full_name: { type: String, required: true },
