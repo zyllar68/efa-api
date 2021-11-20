@@ -3,7 +3,9 @@ const autoIncrement = require("mongoose-auto-increment");
 
 const Schema = new mongoose.Schema(
   { 
-
+    lastEditedBy:{ type: String},
+    createdBy:{ type: String, required: true },
+    shipped_date:{ type: String, required: true },
     sender:
       {
         full_name: { type: String, required: true },
@@ -25,6 +27,7 @@ const Schema = new mongoose.Schema(
         total_weight: { type: String, required: true },
         vol_weight: { type: String, required: true },
         chargable_weight: { type: String, required: true },
+        status: { type: String, required: true },
         dimension: [
           {
             l: { type: String, required: true },
