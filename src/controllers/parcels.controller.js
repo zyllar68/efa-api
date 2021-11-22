@@ -1,6 +1,8 @@
 const Parcels = require("../models/parcels.model");
 
 exports.readAll = async (req, res, next) => {
+  var mysort = { _id: -1 };
+
   try {
     const filterPipeline = [
       {
@@ -14,7 +16,7 @@ exports.readAll = async (req, res, next) => {
     const docs = await Parcels.aggregate([
       ...filterPipeline,
       { $project: { isDeleted: 0, created_by: 0, bound_to_client: 0, __v: 0 } },
-    ]);
+    ]).sort(mysort);
 
     return res.status(200).send(docs);
   } catch (error) {
@@ -61,6 +63,7 @@ exports.update = async (req, res, next) => {
 }
 
 exports.delete = async (req, res, next) => {
+
   try {
 
     const id = req.params.id;
