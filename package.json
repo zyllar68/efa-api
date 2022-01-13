@@ -19,6 +19,7 @@
   "homepage": "https://github.com/zyllar68/efa-api#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "date-fns": "^2.28.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

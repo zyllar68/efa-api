@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const autoIncrement = require("mongoose-auto-increment");
 
+
 const Schema = new mongoose.Schema(
   { 
     lastEditedBy:{ type: String},
     createdBy:{ type: String, required: true },
-    shipped_date:{ type: String, required: true },
+    shipped_date:{ type: Date, required: true},
     sender:
       {
         full_name: { type: String, required: true },
@@ -49,7 +50,7 @@ autoIncrement.initialize(mongoose.connection);
 Schema.plugin(autoIncrement.plugin, {
   model: 'parcels',
   field: '_id',
-  startAt: 122112445656,
+  startAt: 1221152445656,
   incrementBy: 1,
 });
 

@@ -19,6 +19,6 @@ require('./startup/db')();
 app.use(require('./_utils/error_handler'));
 
 //RUN SERVER
-app.listen(process.env.PORT, '192.168.254.109', () => {
+app.listen(process.env.PORT, '192.168.1.46', () => {
   console.log(`Server running at ${process.env.PORT}`);
 });
